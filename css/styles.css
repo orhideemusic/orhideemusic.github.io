@@ -11530,7 +11530,7 @@ display: none;
 .znaki{
 
   font-size: 8vw;
-  margin-bottom: -100px;
+  margin-bottom: 100px;
 }
 
 .hide{position: fixed;
