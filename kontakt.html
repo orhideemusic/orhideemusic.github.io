@@ -31,6 +31,9 @@
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet" />
+    <!-- Font Awesome-->
+    <script src="https://kit.fontawesome.com/e631c69067.js" crossorigin="anonymous" defer></script>
+
 </head>
 
 <body id="page-top">
@@ -82,6 +85,7 @@
 
                 <section class="resume-section" id="experience">
                     <div class="resume-section-content">
+
                         <h2 class="mb-2">hi there!</h2>
                         <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                             <div class="flex-grow-1">
@@ -92,13 +96,22 @@
 
                         </div>
                         <p id="p2">orhideemusic@gmail.com</p>
-                        <button class="przycisk "onclick="copyToClipboard('#p2')">copy email address</button>
+                        <button class="przycisk " onclick="copyToClipboard('#p2')">copy email address</button>
+
+                        <div class="socials ">
+                            <a class="social-icon" rel="noreferrer" href="https://www.instagram.com/or.hidee/" target="_blank" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a class="social-icon" rel="noreferrer" href="https://soundcloud.com/orhidee" target="_blank" data-toggle="tooltip" data-placement="top" title="Soundcloud"><i class="fab fa-soundcloud"></i></a>
+                            <a class="social-icon" rel="noreferrer" href="https://www.youtube.com/channel/UCB0SGW2I3l0jRshywH1aGUA" target="_blank" data-toggle="tooltip" data-placement="top" title="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a class="social-icon" rel="noreferrer" href="https://open.spotify.com/artist/0OjHAjWzVR17HZFoQfIRWj?si=JLf2veEtTVmtSPW-nWHEOQ&dl_branch=1" target="_blank" data-toggle="tooltip" data-placement="top" title="Spotify"><i class="fab fa-spotify"></i></a>
+
+                        </div>
                 </section>
 
 
 
 
             </div>
+
         </section>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -116,17 +129,17 @@
         }
     </script>
 
-<script type="text/javascript">
-$('.przycisk').click(function(){
-      var $this = $(this);
-      $this.toggleClass('przycisk');
-      if($this.hasClass('przycisk')){
-          $this.text('copy email address');
-      } else {
-          $this.text('copied!');
-      }
-  });
-</script>
+    <script type="text/javascript">
+        $('.przycisk').click(function() {
+            var $this = $(this);
+            $this.toggleClass('przycisk');
+            if ($this.hasClass('przycisk')) {
+                $this.text('copy email address');
+            } else {
+                $this.text('copied!');
+            }
+        });
+    </script>
 </body>
 
 
