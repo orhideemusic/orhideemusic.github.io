@@ -11576,7 +11576,7 @@ color: #fab000;
 }
 
 .bg-custom{
-background-color:#130f40;
+background-color:#000;
 }
 .button-fixed{
 bottom: 0;
@@ -11587,4 +11587,9 @@ border-radius: 4px;
 .fas{
 cursor: pointer;
 font-size: 24px;
+}
+
+.cookienottice{
+
+  visibility: hidden;
 }
