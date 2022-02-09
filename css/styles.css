@@ -49,6 +49,8 @@
   }
 }
 
+
+
 body {
   margin: 0;
   font-family: 'JetBrains Mono', monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -56,6 +58,8 @@ body {
   font-weight: 400;
   line-height: 1.5;
   background-color: #000000;
+  max-width: 100%;
+  overflow-x: hidden;
 
 }
 
@@ -11578,4 +11582,64 @@ color: #fab000;
 .a-single-track{
 
   margin-bottom: 40px;
+}
+
+
+.coverphoto{
+  text-align: center;
+  position: absolute;
+  font-size: 0.5vw;
+}
+
+.LNMF{
+
+  max-width: 100%;
+}
+
+
+.tracklista{
+
+  margin-left: -58px;
+  margin-top: -5px;
+}
+
+.titleep{
+
+  margin-top: -10px;
+}
+
+.orhidee{
+
+  cursor: none;
+}
+
+.strzalki{
+  font-size: 7vw;
+
+}
+
+.spotify {
+
+  font-size: 7vw;
+  margin-left: -10px;
+}
+
+.ctaspoti{
+  /* background-color: #1DB954; */
+  color: white;
+}
+
+.ctasoundcloud{
+  /* background-color: #FE5000; */
+  color: white;
+}
+
+.ctaother{
+  /* background-color: #fab420; */
+  color: white;
+}
+
+.LNMF{
+
+  margin-top: -80px;
 }
