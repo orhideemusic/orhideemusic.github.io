@@ -123,6 +123,8 @@
                         </div>
                         <p id="p2">orhideemusic@gmail.com</p>
                         <button class="copycat " onclick="copyToClipboard('#p2')">copy email address</button>
+                  <hr>
+                        <button class="chat-button" onclick="">chat with me</button>
 
 
                         <div class="socials ">
@@ -169,7 +171,29 @@
         });
     </script>
 
+    <script src="//code.tidio.co/vqw94mntmckxlj3tof0sewsukelrbnj4.js" async></script>
 
+<script type="text/javascript">
+(function() {
+function onTidioChatApiReady() {
+  window.tidioChatApi.hide();
+  window.tidioChatApi.on("close", function() {
+    window.tidioChatApi.hide();
+  });
+}
+
+if (window.tidioChatApi) {
+  window.tidioChatApi.on("ready", onTidioChatApiReady);
+} else {
+  document.addEventListener("tidioChat-ready", onTidioChatApiReady);
+}
+
+document.querySelector(".chat-button").addEventListener("click", function() {
+  window.tidioChatApi.show();
+  window.tidioChatApi.open();
+});
+})();
+</script>
 </body>
 
 
