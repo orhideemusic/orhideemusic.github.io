@@ -11643,3 +11643,24 @@ color: #fab000;
 
   margin-top: -80px;
 }
+
+.symulacje{
+
+  margin-right: 250px;
+  margin-top: -240px;
+}
+
+.opisy{
+
+  margin-left: -250px !important;
+}
+
+.symulator{
+font-size: 7vw;
+  position: absolute;
+  /* opacity: 0.6; */
+  margin-left: 320px;
+  margin-top: -66px;
+  z-index: 12312312312;
+  width: 100vw;
+}
