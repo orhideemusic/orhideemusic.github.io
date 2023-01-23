@@ -1,0 +1,563 @@
+#Zadanie_1:
+#1) Stworz funkcje (nie wykorzystujac petli) przyjmujaca jako argument wejsciowy obiekt "x" oraz:
+#  a) nadajaca nazwy kolumnom (dla tablic) lub elementom (dla wektorow), poczawszy od "x_1" az do "x_n" ("n" jest liczba kolumn lub dlugoscia wektora),
+#  b) wyznaczacjaca sume elementow w kazdej kolumnie (dla tablic) lub sume elementow wektora,
+#  c) zwracajaca obiekt wejsciowy oraz obiekt stworzony w punkcie b)
+#2) Przetestuj dzialenie funkcji dla:
+#  a) macierzy rozmiaru "20x20" o nazwie "macierz" (ziarno = 666),
+#  b) wektora dlugosci "100" o nazwie "wektor" (ziarno = 666)
+#wypelnionych wartosciami losowymi z rozkladu rownomiernego.
+
+
+#Poczatek wykonywania Zadania_1
+zadanie1 <- function(x){
+  nazwyx<-paste("x", 1:10, sep="_")
+  if(is.vector(x)==TRUE)
+  {
+    names(x)<-paste("x", 1:length(x), sep="_")
+    suma<-sum(x)
+    
+  }
+  else{
+    colnames(x)<-paste("x", 1:dim(x)[2], sep="_")
+    suma<-colSums(x)
+  }
+  wynik<-list(x,suma)
+  return(wynik)
+}
+#test
+macierz<-matrix(data=NA, nrow=20, ncol=20)
+set.seed(666)
+macierz[,]<-runif(length(macierz))
+set.seed(666)
+wektor<-runif(100)
+wynikm<-zadanie1(macierz)
+wynikw<-zadanie1(wektor)
+#Koniec wykonywania Zadania_1 
+
+#Zadanie_2: 
+#a) Stworz wektor kolejnych liczb od 1 do 100. Dalej bedziemy zakladac, ze jest to szereg czasowy i tworzyc bedziemy jego opoznienia.
+#b) Stworz macierz o wymiarze "50x11". Nazwij kolumny macierzy w nastepujacy sposob: Pierwsza kolumna to "Y" kolejne 10 kolumn to "x_1" az do "x_10". Uzyj zwektoryzowanej funckji laczacej napisy.
+#c) Do kolumny nr 1 wstaw podzbior elementow wektora z pkt. a) z indeksow do 21 do 70. Za pomocą podwojnej petli wstaw do kolejnych kolumn i wierszy opoznienia wektora z pkt. a, tak ze "x_1" jest opoznieniem o jeden okres a "x_10" opoznieniem o 10 okresow.
+
+#Poczatek fragmentu tabeli wynikowej
+#      Y x_1 x_2 x_3 x_4 x_5 x_6 x_7 x_8 x_9 x_10
+#[1,] 21  20  19  18  17  16  15  14  13  12   11
+#[2,] 22  21  20  19  18  17  16  15  14  13   12
+#[3,] 23  22  21  20  19  18  17  16  15  14   13
+#Koniec fragmentu tabeli wynikowej
+
+#Poczatek wykonywania Zadania_2
+w2<-1:100
+m2<-matrix(data=NA, nrow=50, ncol=11)
+nazwyx<-paste("x", 1:10, sep="_")
+colnames(m2)<-c("Y",nazwyx)
+m2[,1]<- w2[21:70]
+for(i in 1:nrow(m2)){
+  for(j in 2:ncol(m2)){
+    m2[i,j]=m2[i,1]-j+1
+  }
+}
+#Koniec wykonywania Zadania_2
+
+#Zadanie_3:
+#a) Wysymuluj 30 liczb calkowitych z przedzialu od 10 do 20. Poczatkowa wartosc generatora liczb pseudolosowych powinna zostac ustalona na 444.
+#b) Stworz nastepnie poprzez prealokacje wektor liczb calkowitych o wartosciach domyslnych. 
+#   Dlugosc tego wektora ustalona jest jako dlugosc wysymulowanego wektora z punktu powyzej.
+#c) Za pomoca petli for wstaw nastepnie elementy wektora losowego (pkt. a) do wektora z pkt. b. 
+#   Petla powinna byc wykonana w dwoch wersjach: operujac na indeksach obydwu wektorow oraz na rzeczywistych wartosciach jednego z nich.
+#   W ostatnim kroku kazda petla powinna wyswietlac (nie uzywajac funckji print()) caly wektor (pkt. b) oraz informacje o jego typie (wiersz ponizej). 
+
+#Poczatek wykonywania Zadania_3#   
+set.seed(444)
+w3a<-sample(x=10:20, size=30, replace = TRUE)
+w3b<-vector("integer",length=length(w3a))
+(w3a)
+for(i in 1:length(w3a)){
+  w3b[i]<-w3a[i]
+  if(i==length(w3a)){
+    cat(w3b,"\n",typeof(w3b))
+  }
+}
+
+k<-1
+for(i in w3a){
+  w3b[k]<-i
+  k<-k+1
+  if(k==length(w3a)){
+    cat(w3b,"\n",typeof(w3b))
+  }
+}
+#Koniec wykonywania Zadania_3#   
+
+#Zadanie_4:
+#a) Stworz liste "lista_4" o dlugosci 5 o wartosciach domyslnych.
+#b) Stworz wektor "wektor_4" poprzez wylosowanie kolejnych 5 liczb calkowitch (bez powtorzen) z wektora od 1 do 10. 
+#   Poczatkowa wartosc generatora liczb pseudolosowych powinna zostac ustalona na 123.
+#c) Wykorzystujac funkcje zwektoryzowane (bez pętli) wstaw do kolejnych elementow listy "lista_4" wektor powtarzajacy konkretna liczbe z wektora "wektor_4" tyle razy, jaka liczba zawarta jest pod konkretnym elementem wektora "wektor_4", np. dla liczby 4 wektor bedzie mial dlugosc 4 i w kazdym elemencie bedzie liczba 4.
+
+#Poczatek wykonywania Zadania_4#   
+lista_4<-vector("list",5)
+set.seed(123)
+wektor_4<-sample(x=1:10, size=5, replace = FALSE)
+funkcja<- function(x){
+  wynik<-vector("integer",x)
+  wynik[]<-x
+  return(wynik)
+}
+lista_4<-lapply(wektor_4,funkcja)
+#Koniec wykonywania Zadania_4#  
+
+#Zadanie_1:
+#a) Stworz wektor "litery" zawierajacy wielkie litery z podstawowego alfabetu (26 liter).
+#b) Stworz wektor "numery" zawierajacy kolejne liczby calkowite od 1 do "n", 
+#   gdzie "n" jest liczba elementow z wektora "litery" (nie wpisujemy tej wartosci recznie).
+#c) Stworz wektor "litery_numery" laczacy wektory "litery" i "numery" element po elemenice poprzez znak "_".
+#d) Stworz na wektorze "litery_numery" atrybut "Typ" informujacy o typie wektora.
+#e) Przeksztalc wektor "litery_numery" na macierz "Macierz_litery_numery" o rozmiarze "2x13" wstawiajac kolejne elementy w wiersze.
+
+#Poczatek wykonywania Zadanie_1.
+litery <- LETTERS
+numery <- 1:length(litery)
+numery
+litery_numery <- paste(litery, numery, sep="_")
+litery_numery
+attr(litery_numery, "Typ") <- typeof(litery_numery)
+litery_numery
+Macierz_litery_numery <- matrix(litery_numery,2,13,T) #kolejne elementy w wiersze rozumiem jako element 1 - wiersz 1, element 2 - wiersz2, element 3 - wiersz 1...
+Macierz_litery_numery
+#Koniec wykonywania Zadanie_1.
+
+#Zadanie_2:
+#a) Wysymuluj 50 liczb calkowitych z przedzialu od 1 do 20 do wektora "wektor_2". 
+#   Poczatkowa wartosc generatora liczb pseudolosowych powinna zostac ustalona na 123.  
+#b) Zaimportuj plik "Zadanie_2" do obiektu "nazwy". Kolumny powinny byc zaimportowane jako tekst.
+#c) Nadaj nazwe kolejnym elementom wektora "wektor_2" na podstawie wektora "nazwy".
+#d) Wyznacz sume elementow nalezacych do kazdej grupy (zakresu).
+#e) Wyznacz liczbe elementow nalezacych do kazdej grupy (zakresu).
+
+#Poczatek wykonywania Zadanie_2.
+set.seed(123)
+wektor_2 <- sample(1:20,50, T)
+wektor_2
+nazwy <- read.table("Zadanie_2.txt", header = T, sep=":", stringsAsFactors = F)
+nazwy
+names(wektor_2) <- nazwy
+wektor_2
+aggregate(wektor_2, by=list(names(wektor_2)), FUN = sum)
+aggregate(wektor_2, by=list(names(wektor_2)), FUN=function(x){length(x)}) 
+
+
+#Koniec wykonywania Zadanie_2.
+
+#Zadanie_3:
+#a) Stworz liste "lista_3" o dlugosci 5 o wartosciach domyslnych.
+#b) Stworz wektor "wektor_3" poprzez wylosowanie kolejnych 5 liczb calkowitch (bez powtorzen) z wektora od 1 do 10. 
+#   Poczatkowa wartosc generatora liczb pseudolosowych powinna zostac ustalona na 123.
+#c) Wykorzystujac petle "repeat" wstaw do kolejnych elementow listy "lista_3" wektor powtarzajacy konkretna liczbe z wektora "wektor_3" tyle razy, 
+#   jaka liczba zawarta jest pod konkretnym elementem wektora "wektor_3", 
+#   np. dla liczby 4 wektor bedzie mial dlugosc 4 i w kazdym elemencie bedzie liczba 4.
+#d) Przeksztalc liste "lista_3" w wektor liczb calkowitych.
+
+#Poczatek wykonywania Zadanie_3.
+lista_3 <- vector("list", 5)
+lista_3
+set.seed(123)
+wektor_3 <- sample(1:10,5, F)
+wektor_3
+
+wstawianie <- function(x,y){
+  n <-length(x)
+  i <- 1
+  repeat{
+    x[[i]] <- rep(y[[i]], y[[i]])
+    i <- i+1
+    if(i>n) break
+  }
+  return(x)
+}
+lista_3 <- wstawianie(lista_3, wektor_3)
+lista_3
+lista_3 <- do.call("c", lista_3) 
+lista_3
+typeof(lista_3)
+#Koniec wykonywania Zadanie_3.
+
+#Zadanie_4:
+#) Zaimportuj plik "Zadanie_4" do obiektu "obiekt_4".
+#b) Dodaj do obiektu "obiekt_4" nowa kolumne "nowa" poprzez przetestowanie czy liczba w kolumnie "losowe" jest mniejsza od 0.8,
+#  jezeli tak, to nowa kolumna przyjmuje wartosc "malo" w przeciwnym wypadku "duzo".
+#c) Stworz liste "lista_4" poprzez podzial obiektu "obiekt_4" ze wzgledu na kolumne "nowa".
+#d) Wykorzystujac zwektoryzowana funkcje przejdz do kazdego elementu listy "lista_4" i wyznacz 
+#   dla wszystkich mozliwych kolumn sume elementow nalezacych do grupy wyznaczonej przez kolumne "przemienne"
+
+#Poczatek wykonywania Zadanie_4.
+obiekt_4 <- read.table(file = "Zadanie_4.txt", header = T, sep="&",stringsAsFactors = F)
+obiekt_4
+obiekt_4 <- cbind(obiekt_4, nowa = ifelse(obiekt_4$losowe <0.8, "mało", "dużo"))
+obiekt_4
+?split
+lista_4 <- split(obiekt_4, obiekt_4$nowa)
+lista_4
+(lapply(X=lista_4, FUN=function(x) {sum(x$przemienne)}))
+
+#Koniec wykonywania Zadanie_4.
+
+#Zadanie_1: 
+#a) Wysymuluj (bez powtorzen) 20 liczb calkowitych z przedzialu od 1 do 20. 
+#  Poczatkowa wartosc generatora liczb pseudolosowych powinna zostac ustalona na 444.
+#b) Wysymuluj (bez powtorzen) 20 malych liter (alfabet podstawowy). Nie ustawiaj poczatkowej wartosci generatora 
+#   liczb pseudolosowych.
+#c) Wyswietl wszystkie litery (pkt. b) dla ktorych liczby z odpowiadajacych indeksow z wektora numerycznego (pkt. a)
+#sa wieksze od 5 i jednoczesnie mniejsze od 15.
+
+set.seed(444)
+liczby <- sample(1:20,replace = F, size = 20)
+
+litery <-sample(letters, size = 20)
+
+litery[liczby > 5 & liczby < 15 ]
+
+#Zadanie_1: 
+#a) Wysymuluj 20 liczb całkowitych z przedziału od -10 do 20.
+#Początkowa wartość generatora liczb pseudolosowych powinna zostać ustalona na 666.
+#b) Stwórz sekwencje liczb zmiennoprzecinkowych z przedziału od 100 do 200, otrzymując na wyjściu 30 wartości.
+#c) Stwórz listę na podstawie powyższych wektorów.
+#d) Wyznacz wartość średnią dla każdego elementu listy.
+#e) Uzyskane wartości średnie umieść w wektorze liczb typu dobule.
+
+set.seed(666)
+b <- sample(-10:20, size = 20)
+a <- seq(100,200, length.out = 30)
+
+Lista_1<-list(b,a)
+
+suma_listy <- lapply(Lista_1, FUN = mean)
+do.call("c",suma_listy)
+
+#Zadanie_2:
+#a) Wysymuluj z powtorzeniami 10 liczb z wektora od 1 do 10 (seed = 666).
+#b) Przeksztalc wektor z punktu a) na 10-elementowa liste.
+#c) Dla kazdego elementu listy wysumuluj "n" liczb z rozkladu rownomiernego (seed = 666),
+#gdzie "n" jest liczba obecnie znajdujaca sie w elemencie listy. Nie uzywaj petli.
+#d) Dokonaj zlaczenia elementow listy w jeden wektor.
+
+set.seed(666)
+wektorek <- sample(1:10,10, replace = T)
+Lista_2 <-as.list(wektorek)
+set.seed(666)
+
+Lista_2[[1]]<- sample(runif(Lista_2[[1]]),Lista_2[[1]])
+Lista_2[[2]]<- sample(runif(Lista_2[[2]]),Lista_2[[2]])
+Lista_2[[3]]<- sample(runif(Lista_2[[3]]),Lista_2[[3]])
+Lista_2[[4]]<- sample(runif(Lista_2[[4]]),Lista_2[[4]])
+Lista_2[[5]]<- sample(runif(Lista_2[[5]]),Lista_2[[5]])
+Lista_2[[6]]<- sample(runif(Lista_2[[6]]),Lista_2[[6]])
+Lista_2[[7]]<- sample(runif(Lista_2[[7]]),Lista_2[[7]])
+Lista_2[[8]]<- sample(runif(Lista_2[[8]]),Lista_2[[8]])
+Lista_2[[9]]<- sample(runif(Lista_2[[9]]),Lista_2[[9]])
+Lista_2[[10]]<- sample(runif(Lista_2[[10]]),Lista_2[[10]])
+Lista_2
+
+#lub
+set.seed(666)
+wektorek <- sample(1:10,10, replace = T)
+Lista_2 <-as.list(wektorek)
+y <- 1:10
+
+wysymuluj <- function(y){
+  set.seed(666)
+  sample(runif(10), size = wektorek[y])
+}
+
+Lista_2[1:10]<- list(wysymuluj(1),wysymuluj(2),wysymuluj(3),wysymuluj(4),wysymuluj(5),wysymuluj(6),wysymuluj(7),wysymuluj(8),wysymuluj(9),wysymuluj(10))
+
+set.seed(666)
+y <-lapply(Lista_2,FUN = runif)
+
+wysymuluj_2(Lista_2)
+Lista_3[1:10]<- list(wysymuluj(1),wysymuluj(2),wysymuluj(3),wysymuluj(4),wysymuluj(5),wysymuluj(6),wysymuluj(7),wysymuluj(8),wysymuluj(9),wysymuluj(10))
+
+#Zadanie_3: 
+#a) Stworz funkcje wskazujaca obserwacje odstajace z podanego wektora liczb rzeczywistych (x <-rcauchy(10)) 
+# wykorzystujaca regule kwartylow: Q1-1.5*(Q3-Q1) Q1+1.5*(Q3-Q1).
+#b) Funkcja powinna zwracac obiekt z podanymi atrybutami zawierajacymi informacje:
+#a. jakie wartosci sa odstające
+#b. jakie wartosci sa nieodstające
+#c. indeksy wartosci odstających
+#d. indeksy wartosci nieodstających
+#c) (wykorzystaj funkcje quantile, which, attr).
+
+x <- rcauchy(10)
+
+wskazujaca<- function(x){
+  q11 <- quantile(x,0.25)
+  q22 <- quantile(x,0.75)
+  q1 <- q11-1.5*(q22-q11)
+  q2<- q11+1.5*(q22-q11)
+  attr(x,"wartosci sa odstające") <- x [x > q2 |x < q1]
+  attr(x,"indeksy wartosci odstających") <- which( x > q2 |x < q1)
+  attr(x,"wartosci sa nieodstające") <- x [x < q2 & x > q1]
+  attr(x,"indeksy wartosci nieodstających") <- which(x < q2 & x > q1)
+  attributes(x)
+}
+wynik <-wskazujaca(x)
+
+#Zadanie_4: 
+#a) Stworz dwa wektory np. Nie_odstajace oraz Odstajace, ktore beda przechowywac wynik zwracane przez funkcje 
+# stworzona w poprzednim kroku.
+
+Odstajace <- unlist(c(wskazujaca(x)["wartosci sa odstające"],wskazujaca(x)["indeksy wartosci odstających"]))
+Nie_odstajace <- unlist(c(wynik["wartosci sa nieodstające"],wynik["indeksy wartosci nieodstających"]))
+
+
+#Zadanie_1: 
+#a) Wysymuluj 30 liczb calkowitych z przedzialu od 10 do 20.
+# Poczatkowa wartosc generatora liczb pseudolosowych powinna zostac ustalona na 444.
+#b) Stworz nastepnie poprzez prealokacje wektor liczb calkowitych o wartosciach domyslnych. 
+# Dlugosc tego wektora ustalona jest jako dlugosc wysymulowanego wektora z punktu powyzej.
+#c) Za pomoca petli for wstaw nastepnie elementy wektora losowego (pkt. a) do wektora z pkt. b. 
+#  Petla powinna byc wykonana w dwoch wersjach: operujac na indeksach obydwu wektorow oraz na rzeczywistych wartosciach jednego z nich.
+# W ostatnim kroku kazda petla powinna wyswietlac (nie uzywajac funckji print()) caly wektor (pkt. b) oraz informacje o jego typie (wiersz ponizej). 
+
+set.seed(444)
+
+a <- sample(10:20,30, replace = TRUE)
+b <- vector("integer",30) 
+
+
+for (i in 1:length(a)) {
+  b[i] <- a[i] 
+  if(i == length(a) ){
+    cat(b,"\n",typeof(b))
+  }
+} # na indeksach
+
+j = 1
+for(i in a){
+  b[j] <- i
+  if(j == length(a) ){
+    cat(b,"\n",typeof(b))
+  }
+  j = j+1
+} # ma wartościach rzeczywistych
+
+#Zadanie_2:
+#a) Stworz wektor zawierajacy liczby od 1 do 9,
+#b) Stworz liste o dlugosci odpowiadajacej dlugosci wektora z pkt. a.
+#c) Za pomoca petli for iterujacej w ramch wartosci zawartych w wektorze z pkt. a, wstaw w kolejne elementy listy podzbiór wektora z pkt a, tak aby
+#pierwszy element listy zawieral pierwszy element, drugi element listy zawieral pierwszy oraz drugi element,..., 
+#dziewiaty element listy zawieral wszystkie elementy. Stworzy sie swojego rodzaju piramida.
+
+wektor <- c(1:9)
+Lista_1<-vector("list", length(wektor))
+i <- c(1:length(wektor))
+
+for( i in wektor){
+  Lista_1[[i]] <- wektor[1:i]
+}
+
+#Zadanie_1:
+#a) Stworz macierz o rozmiarze "30x12".
+#b) Poczatkowa wartosc generatora liczb pseudolosowych powinna zostac ustalona na 222.
+#c) Pierwsza kolumna powinna zawierac 30 unikalnych wartosci losowych z wektora "1:30".
+#d) Ostatnia kolumna powinna zawierac 30 nieunikalnych wartosci losowych z wektora "1:3".
+#e) Pozostałe kolumny powinny zawierac wartości losowe pochodzace z rozkladu rownomiernego "runif()".
+
+macierz_1<-matrix(, 30,12)
+set.seed(222)
+macierz_1[,1]<- sample(1:30,30, replace = F)
+macierz_1[,12]<-sample(1:3,30, replace = T)
+macierz_1[,2:11]<- runif(300)
+
+
+#Zadanie_2:
+#a) Wczytaj dane zawarte w pliku "zadanie_2.txt". Przyjrzyj sie dokladnie wczytanym danym.
+#b) Wczytane dane potraktuj jako nazwy kolumn w tabeli stworzonej w Zadaniu_1.
+#c) Przekształc stworzona w Zadaniu_1 macierz na ramke danych.
+#d) Za pomoca zwektoryzowanej funkcji, stworz obiekt wyznaczajacy sume kazdej kolumny.
+#e) Usun z obiektu nazwy elementow.
+#f) Za pomoca zwektoryzowanej funkcji, stwórz obiekt wyznaczający wartość srednia kazdej kolumny w 
+#ramach trzech grup (zmienna grupa).
+
+nazwy <- read.table("C:\\Users\\error\\Desktop\\zadanie_2.txt", header = F, stringsAsFactors = F, sep = "")
+nazwy_1 <- c(nazwy[[1]])
+colnames(macierz_1)<- nazwy_1
+
+ramka_3<-data.frame(macierz_1)
+
+obiekt <-apply(macierz_1,2,FUN = sum)
+
+#usuwanie nazw
+obiekt<-unname(obiekt)
+
+srednia<-aggregate(ramka_3,by = list(ramka_3$grupa),FUN = mean)
+
+#Zadanie_1:
+#a) Stworz macierz rozmiaru "10X10" z wartosciami losowymi z rozkladu rownomiernego.
+#b) Stworz funkcje "Funkcja" ktora zwracac bedzie do obiektu "wynik_1" wartosc srednia dla kazdej kolumny macierzy wejsciowej.
+#c) Stworz "Funkcja_env" ktora bedzie "srodowiskowa" wersja powyzszej funkcji. 
+#Powinna ona nie zwracac zadnego obiektu, lecz umieszczac wynikowy obiekt w srodowisku, ktore bedzie obiektem wejsciowym dla funkcji.
+
+macierz <- matrix(runif(100),10,10)
+
+Funkcja <- function(x){
+  wynik_1 <- apply(x, MARGIN = 2, FUN = mean)
+}
+srednia <- Funkcja(macierz)
+srodowisko <- new.env()
+
+Funkcja_env <- function(x,y){
+  assign("wynik_1",apply(x, MARGIN = 2, FUN = mean), envir = y)
+  return(NULL)
+}
+Funkcja_env(macierz,srodowisko)
+
+ls(srodowisko) 
+
+#Zadanie_2:
+#a) Stworz wektor x zawierajacy wszystkie znaki odpowiadajace wartosciom liczbowym z zakresu 1:128.
+#b) Wyswietl wszystkie znaki z wektora x, ktore odpowiadaja liczbom lub literom malym lub wielkim.
+#c) Wyswietl wszystkie znaki z wektora x, ktore odpowiadaja liczbom lub znakom oddzielajacym tekst tj. spacja, tabulator etc.
+#b) Wyswietl wszystkie znaki z wektora x, ktore nie odpowiadaja liczbom.
+
+obiekt<- rawToChar(as.raw(1:128),multiple = T)
+
+grep("[[:alnum:]]",obiekt, value = T)
+grep("[[:blank:][:digit:]]",obiekt, value = T)
+grep("[^[:digit:]]",obiekt, value = T)
+
+#Zadanie_3:
+#a) Stworz wektor y zawierajacy nastepujĹˇce imiona: ("Jacek", "Kasia", "Malgosia","Elzbieta","joasia").
+#b) Stworz wyrazenie regularne, ktore spowoduje wybranie tylko imion: "Kasia","joasia".
+#c) Stworz wyrazenie regularne, ktore spowoduje wybranie tylko imion: "Jacek", "Kasia".
+
+y <- c("Jacek", "Kasia", "Malgosia","Elzbieta","joasia")
+grep("asia", y, value = T)
+grep("[KJ]", y, value = T)
+
+#biblioteki potrzebne do odpalenia programu
+library(purrr)
+library(dplyr)
+
+# Zadanie_1
+#A)swórz wektor x zawierający znaki odpowiadające liczbą od 1 do 128
+x <- map_chr(c(1:128), intToUtf8)#map_char przypisanie znaków do wektora o długości 128
+#B)swtórz wektor zawierający następujące elementy :"Kasia", "MaĹ‚gosia", "ElĹĽbieta", "joasia", "acccb", "ab 100"
+y <- c("Jacek", "Kasia", "MaĹ‚gosia", "ElĹĽbieta", "joasia", "acccb", "ab 100")
+#C) wyświetl wszystkie znaki z wektora x które odpowiadają cyfrą lub literą dużym / małym
+print(x[grepl("[A-Za-z0-9]", x)])#Wyświetl(x[z przedziału "[od A do Z, od a do z, od 0 do 9]", w wektorze x)])
+#d) jak wyżej odpowiadające znaką specjalnym
+print(x[grepl("[0-9!-@]", x)])
+#e) jak wyżej nie odpowiadające cyfrą
+print(x[grepl("[^0-9]", x)])# ^ <- z wyłączeniem
+#f) stwórz wyrażenie regularne które spowoduje wybranie tylko imion Kasia i joasia
+print(y[grepl("asia$", y)])# wyświetl zawierające asia <- "asia$" <- zawiera ($)
+#g) stwórz wyrażenie regularne które spowoduje wybranie elementów "ab 100" lub "accccb"
+print(y[grepl("^a", y)])#zaczyna się od a jeśli chcemy dokładnie jak w zadaniu to np. print(y[grepl("^ac", y)])
+# Zadanie 2
+library(purrr)
+library(dplyr)
+#a)wysymuluj 50 liczb całkowitych z przediału od 1 do 20 do wektóra " wektor_2 ",
+#początkowa wartość generatora liczb pseudolosowych powinna zostać ustalona na 123.
+set.seed(123)#losowanie od pkt 123(czas procesora)
+wektor_2 <- sample(1:20, 50, replace = TRUE)#wylosowanie dla wektora 2 od 1-20 50 szt z powtórkami.
+#b)zaimportuj plik "zadanie_2" do obiektu "nazwa" kolumny powinny być zaimportowane jako tekst
+nazwy <- read.csv("Zadanie_2.txt", header = TRUE, sep = ':')#importowanie pliku jeśli jest w tym samym katalogu to tak jak jest jeśli nie
+#to powinni.śmy określić całą ścieżkę do pliku np. nazwy <- read.csv("c:\coś tam\Zadanie_2.txt"
+#c)nadaj nazwy kolejnym elementom wektora "wektor_2" na podstawie wektora "nazwa".
+names(wektor_2) <- nazwy
+#d)wyznacz sumy elementów należących do każdej grupy (zakresu), nie wykorzystując pętli
+sumy <- tapply(wektor_2, names(wektor_2), sum)
+#e)wyznacz liczbę elementów należących do każdej grupy (zakresu), nie wykorzystując pętli
+liczby <- tapply(wektor_2, names(wektor_2), length)
+# Zadanie 3
+library(purrr)
+library(dplyr)
+#A) stwórz funkcje (bez pętli) przyjmującą jako argument wejściowy obiekt x
+przetwarzaj = function(x) {
+  #a)nadająca nazwy kolumn lub elementom, począwszy od x_1 do x_n 
+  if (is.matrix(x)) # matrix to macierz / tablica
+  {
+    colnames(x) <- map_chr(1:ncol(x), function(c) paste("x_", c, sep=""))
+  } else {
+    names(x) <- map_chr(1:length(x), function(c) paste("x_", c, sep=""))  
+  }
+  #b) wyznacz sume elementów w każdej kolumnie lub sume elementów wektora
+  suma <- sum(x)
+  #c) zwraca obiekt wejściowy oraz obiekt stworzony w punkcie b).
+  return(x)
+}
+#B) przetestuj działanie funkcji dla
+set.seed(666)
+#b) wektorem o długości 100 o nazwie wektor (ziarno = 666) wypełnionych wartościami losowymi z rozkładu rownomiernego
+wektor <- sample(1:20, 100, replace = TRUE)
+wektor <- przetwarzaj(wektor)#wstawienie wartości wektor jako x do funkci
+#a)macierzy rozmiaru 20x20 o nazwie macierz (ziarno = 666)wypełnionych wartościami losowymi z rozkładu rownomiernego
+set.seed(666)
+macierz <- matrix(sample(1:20, 400, replace = TRUE), nrow = 20)# wypełnij macierz wartościami losowaymi od 1 do 20 400 razy z powtórkami o wielkości 20 na 20
+macierz <- przetwarzaj(macierz)
+# Zadanie 4 (potrzebujÄ™ pliku Zadanie_4)
+library(purrr)
+library(dplyr)
+#A) zaimportuj plik "zadanie_4" do obiektu "obiekt_4"
+obiekt_4 <- read.csv("Zadanie_4.txt", header = TRUE, sep = '&')
+#B) Dodaj do obiektu nową kolumne "nowa" poprzez przetestowanie czy liczba w kolumnie "losowe"
+#jest mniejsza od 0,8,jeśli tak do nowa kolumna przyjmuje wartośc "mało" w przeciwnym "duzo"
+obiekt_4 <- obiekt_4 %>% mutate(nowa = case_when(
+  losowe > 0.8 ~ "duĹĽo", losowe <= 0.8 ~ "maĹ‚o"))#mute dodaje elementy bez zmiany pierwotnych.
+#C) stwórz listyę "lista_4" poprzez podział obiektu "obiekt_4" ze względu na kolumne "nowa"
+lista_4 <- as.list(obiekt_4$nowa)
+#D) Wykorzystując zwektorowana funkcje przejdz do każdego elementu listy i wyznacz do wszystkich
+#mozliwych kolumn sume elementów należących do grupy wyznaczonej przez kolumne "przemienne"
+suma_4 <- colSums(obiekt_4[1:3])
+#-------------------------------------------------------------------------------------------------
+# Wersja druga
+#zadanie 1 to to samo co 3 z pierwszej wersji
+# Zadanie 2
+library(purrr)
+library(dplyr)
+#A) stwórz wektor koleejnych liczb od 1 do 100.
+liczby <- c(1:100)
+#B) Stworz macierz o wymiarze 50x10 Nazwij kolumny macierzy w następujący sposób : piersza = Y a każda następna od x_1 do x_n
+kolumny <- c("Y", map_chr(1:10, function(c) paste0("x_", c)))#nazwy dla kolum
+macierz <- matrix(NA, 50, 11)#tworzenie macierzy 2 wymiarowej NA = NULL (pustę wartości ale rezerwójemy miejsce na nazwy kolumn)
+colnames(macierz) <- kolumny#przypisanie nazw kolumn
+#c) Do kolumny pierwszej wstaw podzbiór elementów wektora z pkt a z indeksów od 21 do 70
+#za pomocą pętli wstaw do kolejnych kolumn i wierszy opóźnienia wektora z pkt. a, tak że x_1 jest opóźnione o jeden okres 
+#a x_1 o 10 okresów.
+macierz[,1] <- liczby[21:70]#przypisanie wartości do pierwszej kolumny
+for (wiersz in 1:nrow(macierz)) {
+  for (kolumna in 2:ncol(macierz)) #maciez od 2 kolumny
+  {
+    macierz[wiersz, kolumna] <- macierz[wiersz, kolumna - 1] - 1#tłumacząc każda kolejna kolumna ma wartość zmniejszoną o jedną jednostę
+  }
+}
+# Zadanie 3
+library(purrr)
+library(dplyr)
+#a)Wysymuluj 30 liczb całkowitych z przedziału od 10 do 20 (ziarno = 444)
+set.seed(444)
+calkowite <- sample(10:20, 30, replace = TRUE)
+#b) stwórz następnie poprzez prealokacje wektor liczb całkowitych o wartościach domyślinych o długości
+#wektora wyżej
+nowy <- vector(mode = "integer", length = length(calkowite))#wartości int czyli liczbowe domyślne (mode= integer)
+#c) za pomocą pętli for wstaw następnie elementy wektora losowaego z pkt a do wektora z pkt b
+#poniżej jest zrobiona wersja na indeksach obydwu wektorów
+for (i in 1:length(calkowite)) {
+  nowy[i] <- calkowite[i]
+}
+#wyświetlanie bez użycia print
+calkowite
+nowy
+typeof(calkowite)
+typeof(nowy)
+# Zadanie 4
+#a) stwórz listę od długości 5 i wartościach domyślnych
+set.seed(123)#to jest do pkt b
+lista_4 <- as.list(vector(mode = "integer", length = 5))
+#b) stworz wektor poprzez wylosowanie licz od 1 do 10 5 razy bez powtórek (ziarno= 123)
+wektor_4 <- sample(1:10, 5)
+#c) wykorzystując funkcje bez pętli wstaw do kolejnych elementów listy wektor powtarzający konkrętną liczbę 
+#z wektora tyle razy jaka liczba jest zawarta w danym indeksie.
+lista_4 <- map(wektor_4, function(x) rep(x, x))
