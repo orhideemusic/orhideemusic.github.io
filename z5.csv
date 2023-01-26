@@ -1,0 +1,105 @@
+Tresc,Kod
+"Normalizuj wektor adresów, zastępując wielkie litery małymi literami.","adresy_znormalizowane <- tolower(adresy)
+adresy_znormalizowane"
+Wybierz tylko liczbową część wektora adresów.,"numeric_address <- as.numeric(gsub(""[^0-9]+"", """", adresy))
+numeric_address"
+Podziel wektor adresów na dwie części: adres i miasto. Wynik powinien być macierzą.,"adresy_split <- strsplit(adresy, "","")
+
+adresy_matrix <- as.matrix(sapply(adresy_split, function(x) c(x[1], x[2])))
+adresy_matrix"
+"Podziel wektor adresów na trzy części: numer domu, ulicę i miasto. Wynik powinien być macierzą. 
+Podpowiedź: użyj asercji z wyrażeniem w tył regex.","adresy_parts <- regmatches(adresy, gregexpr(""([0-9]+), ([A-Za-z ]+), ([A-Za-z ]+)"", adresy))
+adresy_matrix2 <- as.matrix(sapply(adresy_parts, function(x) c(x[1], x[2], x[3])))
+adresy_matrix2"
+"#Zdanie zaczyna sie na ""T""","
+first_words <- sapply(dluga_sentencja, function(sentence) {
+  if (startsWith(sentence, ""T"")) {
+    return(str_extract(sentence, ""^T\\w+""))
+  } else {
+    return(NA)
+  }
+})
+"
+"#Zdanie konczy sie na ""s""","last_words <- sapply(dluga_sentencja, function(sentence) {
+  if (endsWith(sentence, ""s."")) {
+    return(str_extract(sentence, ""\\w+s\\.""))
+  } else {
+    return(NA)
+  }
+})
+"
+"#Zdanie zaczyna sie na ""t"" i konczy na ""s""","first_and_last_words <- sapply(dluga_sentencja, function(sentence) {
+  if (startsWith(sentence, ""T"") && endsWith(sentence, ""s."")) {
+    return(c(str_extract(sentence, ""^T\\w+""), str_extract(sentence, ""\\w+s\\."")))
+  } else {
+    return(NA)
+  }
+})"
+Pokaż tylko pierwszych 20 znaków wszystkich zdań w wektorze dluga_sentencja,"short_sentences <- sapply(dluga_sentencja, function(sentence) {
+  substr(sentence, 1, 20)
+})
+short_sentences_with_ellipsis <- paste(short_sentences, "".."", sep = """")
+
+
+short_sentences_with_ellipsis"
+"Znormalizuj wektor produkty, usuwając wszystkie niepotrzebne spacje (zarówno na początku, na końcu, jak i w środku)","produkty_normalized <- gsub(""\\s+"", "" "", produkty)
+produkty_normalized <- toupper(produkty_normalized)
+produkty_normalized"
+"Przygotuj wektor nazwa_pola, zastępując wszystkie symbole podkreśleń spacjami i konwertując je na wielkie litery.","nazwa_pola_formatted <- gsub(""_"", "" "", nazwa_pola)
+nazwa_pola_formatted <- toupper(nazwa_pola_formatted)
+nazwa_pola_formatted"
+"Wyrównaj wszystkie nazwa_pola, aby miały równą długość, dodając spacje na początku odpowiednich ciągów.","max_length <- max(nchar(nazwa_pola))
+nazwa_pola_aligned <- sprintf(""%*s"", max_length, nazwa_pola)
+
+nazwa_pola_aligned"
+"W wektorze pracownik_umiejetnosci poszukaj pracowników, którzy są zdefiniowani jako „Pro” lub „Medium”. 
+#             Wynikiem powinna być macierz, która zawiera imię i nazwisko pracownika w pierwszej kolumnie, a poziom umiejętności (bez nawiasów) w drugiej kolumnie. 
+#             Pracownicy, którzy nie są zakwalifikowani, powinni otrzymać brakujące wartości w obu kolumnach.","
+indices <- grep(""Pro|Medium"", pracownik_umiejetnosci)
+split_elements <- strsplit(pracownik_umiejetnosci[indices], "" \\("")
+
+names <- sapply(split_elements, function(x) x[1])
+levels <- sapply(split_elements, function(x) gsub(""\\)"", """", x[2]))
+
+result <- as.matrix(cbind(names, levels))
+
+result"
+"Stworz wektor x zawierajacy wszystkie znaki odpowiadajace wartosciom liczbowym z zakresu 1:128. Wyswietl wszystkie znaki z wektora x, ktore odpowiadaja liczbom lub literom malym lub wielkim.Wyswietl wszystkie znaki z wektora x, ktore odpowiadaja liczbom lub znakom oddzielajacym tekst tj. spacja, tabulator etc.","x <- intToUtf8(1:128)
+x
+indices <- grep(""[[:alnum:]]"", x)
+x[indices]
+library(stringr)
+indices <- which(str_detect(x, ""[[:blank:]]""))
+x[indices]"
+"Stworz wektor y zawierajacy nastepujace imiona: (""Jacek"", ""Kasia"", ""Małgosia"",""Elżbieta"",""joasia"").","y <- c(""Jacek"", ""Kasia"", ""Małgosia"",""Elżbieta"",""joasia"")
+y
+
+
+# b) Stworz wyrazenie regularne, ktore spowoduje wybranie tylko imion: ""Kasia"",""joasia"".
+grep(regex, y, ignore.case = TRUE, value = TRUE)
+
+# c) Stworz wyrazenie regularne, ktore spowoduje wybranie tylko imion: ""Jacek"", ""Kasia"".
+regex <- ""(^Jacek$|^Kasia$)""
+grep(regex, y, value = TRUE)"
+"Stwotrz obiekt ""dane"" na podstawie nastepujacego wektora: c(""1"", ""1 2"", ""12a3"", ""1223"", ""122234"", ""212234"",""1 22 3"").","data <- c(""1"", ""1 2"", ""12a3"", ""1223"", ""122234"", ""212234"",""1 22 3"")
+
+
+grep(""(2$|3$)"", data, value = TRUE)
+grep(""^[^2]*2{1,3}[^2]*$"", data, value = TRUE)
+grep(""[a-z ]+"",data,value = TRUE)"
+Pierwsze Drugie -- environment,"Pierwsze <- new.env()
+
+# b) Umiesc w srodowisku ""Pierwsze"" obiekt ""x"" przyjmujacy wartosc 10.
+assign(""x"", 10, envir = Pierwsze)
+# c) Stworz srodowisko ""Drugie"" w srodowisku ""Pierwsze"". (Po wyswietleniu obiektow znajdujacych sie w srodowisku ""Pierwsze"", srodowisko ""Drugie"" powinno byc tam widoczne)
+Pierwsze$Drugie <- new.env()
+
+# d) Umiesc w srodowisku ""Drugie"" obiekt ""y"" przyjmujacy wartosc 20.
+Pierwsze$Drugie$y <- 20
+Pierwsze$Drugie$y
+# e) Stworz funkcje zamieniajaca wartosc obiektu ""x"" w srodowisku ""Pierwsze"" na warotsc z obiektu ""y"" ze srodowiska ""Drugie"". Funkcja przyjmuje jako argument srodowisko.
+
+change_value <- function(env) {
+  x_value <- get(""y"", envir = env$Drugie)
+  assign(""x"", x_value, envir = env)
+}"

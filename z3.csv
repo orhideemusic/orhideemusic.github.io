@@ -1,0 +1,129 @@
+Tresc,Kod
+Liczba a do potegi,"power <- function(a, b = 2) {
+result <- a ^ b
+return(result)
+}
+print(power(5))  # powinno być 25 (5^2)
+print(power(5, 3)) "
+Zmiana wartości pi w środowisku globalnym,"print(pi)
+change_pi <- function(new_pi) {
+assign(""pi"", new_pi, envir = globalenv())
+}
+change_pi(""3.5"")  # zmienia wartość pi na 3,5
+print(pi) "
+Zakres wartości wektora,"check_range <- function(vec1, vec2) {
+  min_val <- range(vec2)[1]
+  max_val <- range(vec2)[2]
+    result <- all(vec1 >= min_val & vec1 <= max_val)
+  return(result)
+}
+print(check_range(3:5, 1:199))  # powinien wypisać TRUE
+print(check_range(1:5, 3:7)) "
+Liczba braków w danym wektorze,"count_missing_values <- function(vec) {
+ 
+ missing_values <- is.na(vec)
+ count <- sum(missing_values)
+  
+  return(count)
+}
+print(count_missing_values(c(1, NA, 2, NA, 3)))
+print(count_missing_values(c(1, 2, 3, 4, 5))) "
+"Konwersja NA, NaN, INF, na jego wartosc srednia.","convert_to_average <- function(x) {
+  x[is.na(x) | is.nan(x) | is.infinite(x)] <- NA
+  avg <- mean(x, na.rm = TRUE)
+  x[is.na(x)] <- avg
+  return(x)
+}
+x <- c(1, 2, Inf, 3, NaN, NA, 5, NA, Inf)
+x <- convert_to_average(x)
+
+x
+"
+wartosc srednia oraz mediana danego wektora,"mean_median_ignore_min_max <- function(vec) {  sorted_vec <- sort(vec)
+    ignored_vec <- sorted_vec[2:(length(sorted_vec) - 1)]
+  
+  mean <- mean(ignored_vec)
+  median <- median(ignored_vec)
+    cat(""Average is:"", mean, "", median is:"", median, ""\n"")
+}# przetestuj funkcję
+mean_median_ignore_min_max(1:5)"
+Statystyka opisowa dla wektora,"descriptive_statistic <- function(vec, statistic) {
+  result <- switch(statistic,
+                   ""mean"" = mean(vec),
+                   ""min"" = min(vec),
+                   ""max"" = max(vec))
+  
+  cat(""The value of"", statistic, ""is:"", result, ""\n"")
+}
+
+descriptive_statistic(1:5, ""mean"") 
+descriptive_statistic(1:5, ""min"")
+descriptive_statistic(1:5, ""max"")"
+Wartosci odstajace wektora (x <-rcauchy(10)),"x <- rcauchy(10)
+wskazujaca<- function(x){
+  q11 <- quantile(x,0.25)
+  
+  q22 <- quantile(x,0.75)
+  q1 <- q11-1.5*(q22-q11)
+  q2<- q11+1.5*(q22-q11)
+  attr(x,""wartosci sa odstające"") <- x [x > q2 |x < q1]
+  attr(x,""indeksy wartosci odstających"") <- which( x > q2 |x < q1)
+  attr(x,""wartosci sa nieodstające"") <- x [x < q2 & x > q1]
+  attr(x,""indeksy wartosci nieodstających"") <- which(x < q2 & x > q1)
+  attributes(x)
+}
+wynik <- wskazujaca(x)
+wynik #### Test x <- rcauchy(10)
+
+wskazujaca <- function(x){
+  q11 <- quantile(x,0.25)
+  q22 <- quantile(x,0.75)
+  q1 <- q11-1.5*(q22-q11)
+  q2 <- q11+1.5*
+    
+  attr(x,""wartosci sa odstajace"") <- x[x > q2 | x < q1]"
+Stworz nastepnie poprzez prealokacje wektor liczb calkowitych o wartosciach domyslnych.,"set.seed(444)
+w3a<-sample(x=10:20, size=30, replace = TRUE)
+
+w3b<-vector(""integer"",length=length(w3a))
+(w3a)
+for(i in 1:length(w3a)){
+  w3b[i]<-w3a[i]
+  if(i==length(w3a)){
+    cat(w3b,""\n"",typeof(w3b))
+  }
+}
+
+
+
+k<-1
+for(i in w3a){
+  w3b[k]<-i
+  k<-k+1
+  if(k==length(w3a)){
+    cat(w3b,""\n"",typeof(w3b))
+  }
+}"
+" Stworz wektor zawierajacy liczby od 1 do 9,
+# b) Stworz liste o dlugosci odpowiadajacej dlugosci wektora z pkt. a.
+# c) Za pomoca petli for iterujacej w ramch wartosci zawartych w wektorze z pkt. a, wstaw w kolejne elementy listy podzbiór wektora z pkt a, tak aby
+#   pierwszy element listy zawieral pierwszy element, drugi element listy zawieral pierwszy oraz drugi element,..., 
+#   dziewiaty element listy zawieral wszystkie elementy. Stworzy sie swojego rodzaju piramida.","vec <- 1:9
+
+# utwórz listę o tej samej długości co vec
+my_list <- vector(""list"", length(vec))
+
+# użyj pętli for, aby wstawić podzbiory vec do kolejnych elementów my_list
+for (i in 1:length(vec)) {
+  my_list[[i]] <- vec[1:i]
+}
+
+# wydrukuj listę
+print(my_list) "
+ Wykonaj powyzsze zadanie nie wykorzystujac petli.,"vec <- 1:9
+
+my_list <- vector(""list"", length(vec))
+
+my_list <- Map(function(i) vec[1:i], 1:length(vec))
+
+print(my_list) "
