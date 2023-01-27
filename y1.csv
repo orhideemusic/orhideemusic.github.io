@@ -1,0 +1,36 @@
+Tresc,Kod
+Przemienne mniejsze od 0.8,"obiekt_1<-read.table(""C:\\Users\\black\\Pulpit\\SGGW\\R\\Zadanie_5.txt"", header = T, sep = ""&"")
+nowa<-obiekt_1$losowe
+nowa[nowa<0.8]=""mało""
+nowa[nowa!=""mało""]=""dużo""
+obiekt_1=cbind(obiekt_1,nowa=nowa)
+lista_2<-list(mało = obiekt_1[obiekt_1$nowa==""mało"",],dużo = obiekt_1[obiekt_1$nowa==""dużo"",])
+lapply(lista_2, FUN = function(x){
+  lapply(split(x[1:3],x$przemienne),FUN = function(y) lapply(y,sum))
+})"
+drugi element listy zawieral pierwszy oraz drugi element,"wektor_3<-1:9
+lista_3<-vector('list',length(wektor_3))
+lista_3
+for (x in wektor_3) {
+  if (x==1) {
+    lista_3[[1]]<-1
+  }
+  else{
+    lista_3[[x]]<-c(lista_3[[x-1]],x)
+  }
+}"
+"Wysymuluj z powtorzeniami 10 liczb z wektora od 1 do 10 do wektora ""obiekt_1"" (seed = 666).","set.seed(666);obiekt_1<-sample(1:10,replace = T, size = 10)
+
+lista_1<-as.list(obiekt_1)
+
+set.seed(666);lista_1<-lapply(lista_1, FUN = function(x) runif(x,min = 1, max = 10))
+wektor<-unlist(lista_1)"
+"Wysymuluj 50 liczb calkowitych z przedzialu od 1 do 20 do wektora ""wektor_2"".",
+ Stworz wektor liczb od 1 do 1000 dodajac do niego wartosci losowe z rozkladu normalnego o sredniej 100 oraz o odchyleniu standardowym 10.,"set.seed(123)
+vec <- 1:1000 + rnorm(1000, mean = 100, sd = 10)
+segments <- split(vec, rep(1:6, length.out = length(vec)))
+windows()
+layout(matrix(1:6, nrow = 2))
+for (i in 1:6) {
+  plot(segments[[i]], type = ""l"", main = paste(""Wykres_"",i), xlab = """", ylab = ""temperatura"")
+}"
