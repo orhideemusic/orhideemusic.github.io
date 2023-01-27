@@ -1,3 +1,4 @@
+Treść,Kod
 "#Zadanie_1:
 #1) Stworz funkcje (nie wykorzystujac petli) przyjmujaca jako argument wejsciowy obiekt ""x"" oraz:
 #  a) nadajaca nazwy kolumnom (dla tablic) lub elementom (dla wektorow), poczawszy od ""x_1"" az do ""x_n"" (""n"" jest liczba kolumn lub dlugoscia wektora),
