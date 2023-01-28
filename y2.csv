@@ -1,0 +1,75 @@
+Treść,Kod
+"# Zadanie_1:
+# a) Wysymuluj 50 liczb calkowitych z przedzialu od 1 do 20 do wektora ""wektor_1"". 
+#    Poczatkowa wartosc generatora liczb pseudolosowych powinna zostac ustalona na 123.  
+# b) Zaimportuj plik ""Zadanie_1"" do obiektu ""nazwy"". Kolumny powinny byc zaimportowane jako tekst.
+# c) Nadaj nazwe kolejnym elementom wektora ""wektor_1"" na podstawie wektora ""nazwy"".
+# d) Wyznacz sume elementow nalezacych do kazdej grupy (zakresu).
+# e) Wyznacz liczbe elementow nalezacych do kazdej grupy (zakresu).","set.seed(123)
+wektor_1 <- sample(1:20, 50, T)
+wektor_1
+nazwy <- read.table(""plik"", header = T, sep = "":"", stringsAsFactors = F)
+nazwy
+names(Wektor_2) <- nazwy
+wektor_2
+wektor_sum <- aggregate(x = wektor_2, by attributes(wektor_2), FUN = sum)
+wektor_ilosci <- aggregate(x = wektor_2, by attributes(wektor_2), FUN = length"
+" Stworz liste ""lista_2"" o dlugosci 5 o wartosciach domyslnych.
+# b) Stworz wektor ""wektor_2"" poprzez wylosowanie kolejnych 5 liczb calkowitch (bez powtorzen) z wektora od 1 do 10. 
+#    Poczatkowa wartosc generatora liczb pseudolosowych powinna zostac ustalona na 123.
+# c) Wykorzystujac petle ""repeat"" wstaw do kolejnych elementow listy ""lista_2"" wektor powtarzajacy konkretna liczbe z wektora ""wektor_1"" tyle razy, 
+#    jaka liczba zawarta jest pod konkretnym elementem wektora ""wektor_2"", 
+#    np. dla liczby 4 wektor bedzie mial dlugosc 4 i w kazdym elemencie bedzie liczba 4.
+# d) Przeksztalc liste ""lista_2"" w wektor liczb calkowitych.","list_2 <- vector(""list"", 5)
+set.seed(123)  # set the initial value of the pseudo-random number generator
+vector_2 <- sample(1:10, 5, replace = FALSE)
+repeat {
+  for(i in 1:length(vector_2)) {
+    list_2[[i]] <- rep(vector_2[i], vector_2[i])
+  }
+  if(i == length(vector_2)) break
+}
+vector_3 <- unlist(list_2)
+vector_3
+list_2
+"
+"# Zadanie_3:
+# a) Stworz macierz ""macierz_1"" rozmiaru ""10X10"" z wartosciami losowymi z rozkladu rownomiernego (seed = 123).
+# b) Umiesc ""macierz_1"" w srodowisku ""srodowsiko_1"".
+# c) Stworz funkcje ""Funkcja"" przyjmujaca jako argument wejsciowy ""x"" srodowisko ""srodowsiko_1"" oraz zwracajaca obiekt typu ""NULL"".
+#    ""Funkcja"" powinna tworzyc wewnatrz przyjmowanego jako argument wejsciowy srodowisku ""x"" kopie macierzy ""macierz_1"" o nazwie ""macierz_2"" 
+#    oraz kopie macierzy ""macierz_1"" o nazwie ""macierz_3"" w srodowisku globalnym.","set.seed(123)
+matrix_1 <- matrix(runif(100), nrow = 10, ncol = 10)
+
+environment_1 <- new.env()
+assign(""matrix_1"", matrix_1, envir = environment_1)
+
+my_function <- function(x) {
+  assign(""matrix_2"", get(""matrix_1"", envir = x), envir = x)
+  assign(""matrix_3"", get(""matrix_1"", envir = x), envir = .GlobalEnv)
+  return(NULL)
+}
+my_function(environment_1)"
+"# Zadanie_4:
+# a) Stworz wektor ""1_128"" zawierajacy wszystkie znaki odpowiadajace wartosciom liczbowym z zakresu 1:128. 
+#    Wyswietl ten wektor w terminalu.
+# b) Stwotrz obiekt ""dane"" na podstawie nastepujacego wektora: c(""1"", ""1 2"", ""12a3"", ""1223"", ""122234"", ""212234"",""1 22 3"").
+# c) Stworz wyrazenie regularne znajdujace elementy wektora ""dane"", konczace sie na ""2"" lub ""3"".
+# d) Stworz wyrazenie regularne znajdujace elementy wektora ""dane"", posiadajace od jedej do trzech ""2"" nie bedacych jednoczesnie poczatkiem ani koncem tekstu.
+# e) Stworz wyrazenie regularne znajdujace elementy wektora ""dane"", posiadajace male litery lub spacje.","r <- rawToChar( as.raw( 1:128 ), multiple = T )
+dane <- c(""1"", ""1 2"", ""12a3"", ""1223"", ""122234"", ""212234"",""1 22 3"")
+
+
+f <- grep(""[2]$"", dane, value = T)
+g <- grep(""[3]$"", dane, value = T)
+fg <- list(f, g)
+fg
+
+kr<- grep(""2{1,3}"",dane,value=T)
+kr1<-grep(""^[^2]"",kr,value = T)
+grep(""[^2]$"",kr1,value = T)
+
+r <- grep(""a"", dane, value = T)
+p <- grep("" "", dane, value = T)
+k <- list(r, p)
+k"
